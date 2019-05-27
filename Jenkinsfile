@@ -5,8 +5,10 @@ node {
     }
 
     stage ("Create file log") {
-        def JobName = "namth22"
-        echo "${JobName}"
+        def JobName = "${env.JOB_NAME}"
+        def BuildNumber = "${BUILD_NUMBER}"
+
+        echo "${JobName} --- ${BuildNumber}"
         //sh "curl -X POST http://192.168.56.106:8080/jenkins/job/${JobName}/${BuildNumber}/consoleText >> /home/namth22/show-log/${BuildNumber}.log"
     }
 }
