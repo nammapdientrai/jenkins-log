@@ -3,10 +3,8 @@ node {
     def JobName = "jenkins_log/job/jenkins-log-master"
     def BuildNumber = "${env.BUILD_NUMBER}"
 
-    set +x
     sh "echo '${JobName} ${BuildNumber}' >> /home/namth22/show-log/info.log"
-    set -x
-    
+
     build "job-01"
 }
 
