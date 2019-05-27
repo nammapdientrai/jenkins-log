@@ -2,13 +2,8 @@ node {
     build "job-01"
     build "job-02"
     build "job-03"
-
-    def logContent = Jenkins.getInstance()
-                .getItemByFullName(env.JOB_NAME)
-                .getBuildByNumber(
-                    Integer.parseInt(env.BUILD_NUMBER))
-                .logFile.text
-
-    // copy the log in the job's own workspace
-    writeFile file: "buildlog.txt", text: logContent
 }
+
+//curl -X POST "http://tunv3:<API Token>@10.88.96.170:8080/job/$JobName/$BuildNumber/consoleText" >> "/var/lib/jenkins/logs/$JobName/$BuildNumber.log"
+/curl -X POST "http://tunv3:<API Token>@10.88.96.170:8080/job/$JobName/$BuildNumber/api/json" >> "/var/lib/jenkins/logs/$JobName/$BuildNumber.json"
+
