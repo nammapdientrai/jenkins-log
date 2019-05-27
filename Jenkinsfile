@@ -4,8 +4,7 @@ node {
     def BuildNumber = "${env.BUILD_NUMBER}"
 
     sh "echo '${JobName} ${BuildNumber}' >> /home/namth22/show-log/info.log"
-}
-node {
+
     build "job-01"
 
     set +x
