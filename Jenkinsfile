@@ -5,7 +5,7 @@ node {
 
     sh "echo '${JobName} ${BuildNumber}' >> /home/namth22/show-log/info.log"
 
-    buil "job-01"
+    build "job-01"
 
     set +x
     sh "Hello Wolrd"
