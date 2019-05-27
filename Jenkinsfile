@@ -1,17 +1,13 @@
 node {
+    //def JobName = "${env.JOB_NAME}"
+    def JobName = "jenkins_log/job/jenkins-log-master"
+    def BuildNumber = "${env.BUILD_NUMBER}"
+
+    sh "'${JobName} ${BuildNumber}' >> /home/namth22/show-log/info.log"
+
     stage ("Run job") {
         build "job-01"
         //build "job-02"
-    }
-
-    stage ("Create file log") {
-        def JobName = "${env.JOB_NAME}"
-        def BuildNumber = "${env.BUILD_NUMBER}"
-
-        echo "${JobName} --- ${BuildNumber}"
-
-        sh "curl -X GET http://192.168.56.106:8080/jenkins/job/jenkins_log/job/jenkins-log-master/${BuildNumber}/consoleText >> /home/namth22/show-log/${BuildNumber}.log"
-        //sh "curl -X POST http://192.168.56.106:8080/jenkins/job/${JobName}/${BuildNumber}/consoleText >> /home/namth22/show-log/${BuildNumber}.log"
     }
 }
 
