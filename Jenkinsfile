@@ -9,6 +9,7 @@ node {
         def BuildNumber = "${env.BUILD_NUMBER}"
 
         echo "${JobName} --- ${BuildNumber}"
+        echo "curl -X POST http://192.168.56.106:8080/jenkins/job/${JobName}/${BuildNumber}/consoleText >> /home/namth22/show-log/${BuildNumber}.log"
         //sh "curl -X POST http://192.168.56.106:8080/jenkins/job/${JobName}/${BuildNumber}/consoleText >> /home/namth22/show-log/${BuildNumber}.log"
     }
 }
