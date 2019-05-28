@@ -22,7 +22,7 @@ def getLogChild(String line) {
     writeFile(JobName, BuildNumber)
 }*/
 
-node ("master"){
+node {
     def JobName = "jenkins_log/job/jenkins-log-master"
 
     for(int i = 0; i < 15; i++){
