@@ -24,7 +24,6 @@ def getLogChild(String line) {
 
 node ("master"){
     def JobName = "jenkins_log/job/jenkins-log-master"
-    def Path = "/home/namth22/show-log"
 
     for(int i = 0; i < 15; i++){
         writeFile(JobName, BuildNumber, Path)
@@ -38,7 +37,7 @@ node ("master"){
 }
 
 def writeFile(String JobName, String BuildNumber, String Path) {
-    sh "curl -X GET -u 'namth22:Thn#025381961' 'http://10.88.96.206:80/jenkins/job/${JobName}/${BuildNumber}/consoleText'"
+    sh "curl -X GET 'http://192.168.56.106:8080/jenkins/job/${JobName}/${BuildNumber}/consoleText'"
 }
 
 def List<String> readFileInList(String filePath) {
