@@ -24,16 +24,13 @@ def getLogChild(String line) {
 
 node {
     def JobName = "jenkins_log/job/jenkins-log-master"
+    def summary = (List<String>) 
 
-    for(int i = 0; i < 15; i++){
+    for(int i = 0; i < 20; i++){
         writeFile(JobName, BuildNumber, Path)
 
-        sleep(3)
+        sleep(5)
     }
-
-    echo "------------------------------------------------------------------"
-    //echo "" + readFileInList("${Path}/${JobName}/${BuildNumber}" + ".txt")
-    echo "------------------------------------------------------------------"
 }
 
 def writeFile(String JobName, String BuildNumber, String Path) {
