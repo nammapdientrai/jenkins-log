@@ -1,5 +1,5 @@
-node ("namth22_10.88.96.126"){
-    def JobName = "jenkins-log"
+node {
+    def JobName = "jenkins-log-master"
 
     def consoleOutput = (List<String>) []
 
@@ -18,11 +18,57 @@ node ("namth22_10.88.96.126"){
     }
 }
 
+def List<String> getLog(String JobName, String BuildNumber, index) {
+    def log = sh(returnStdout: true, script: "curl -X GET -u 'namth22:Thn#025381961' 'http://192.168.56.106:8080/jenkins/job/${JobName}/${BuildNumber}/consoleText'")
 
-def List<String> getLog(String JobName, String BuildNumber) {
-    def log = sh(returnStdout: true, script: "curl -X GET -u 'namth22:Thn#025381961' 'http://10.88.96.206:80/jenkins/job/${JobName}/${BuildNumber}/consoleText'")
+    def logsOutput = (List<String>) log.split("\n")
+    def logsTmp = (List<String>) []
 
-    def list = (List<String>) log.split("\n")
+    def sizeLogsOutput = logsOutput.size()
+    def sizeLogstTmp = logsTmp.size()
+
+    def status true
+
+    if(sizeConsoleOutput <= 0){
+        if(tmp[0] != "<html>" && tmp[sizeTmp - 1] != "</html>"){
+            for(int i = 0; i < tmp.size(); i++){
+                pushMessageLog(i, tmp[i])
+            }
+            return tmp
+        } 
+    } else{
+        for(int i = sizeConsoleOutput; i < sizeTmp; i++){
+            consoleOutput[i] = tmp[i]
+
+            pushMessageLog(i, consoleOutput[i])
+
+            // Get log child --------------------------------------
+            def line = (List<String>) consoleOutput[i].split(" ")
+    
+            def s = line[0].trim() + " " + line[1].trim()
+
+            if(s.trim() == "Starting building:"){
+                def size = line.size() - 1
+                def JobChildName = line[size-1].trim()
+                def BuilChilddNumber = line[size].substring(1).trim()
+
+                def logChild = (List<String>) []
+
+                while(status) {
+                    def logChildTmp = getLog(JobChildName, BuilChilddNumber, )
+
+                    logChild = catchLog(logChild, logChildTmp)
+
+                    sleep(3)
+
+                    if(logChild.size() > 0 && checkStop( logChild[logChild.size() -1].trim() ) ) {
+                        status = false
+                    }
+                }
+            }
+            // -----------------------------------------------------
+        }
+    }
 
     return list
 }
@@ -32,7 +78,6 @@ def List<String> catchLog(List<String> consoleOutput, List<String> tmp) {
     def sizeTmp = tmp.size()
 
     def status = true
-    def count = 0
 
     if(sizeConsoleOutput <= 0){
         if(tmp[0] != "<html>" && tmp[sizeTmp - 1] != "</html>"){
@@ -81,7 +126,7 @@ def List<String> catchLog(List<String> consoleOutput, List<String> tmp) {
 
 def pushMessageLog(int stt, String message){
     // Push message to server---------
-    sh "echo '${stt} : ${message}' >> /home/training/log-jenkins.txt"
+    sh "echo '${stt} : ${message}' >> /home/namth22/log-jenkins.txt"
     // -------------------------------
 }
 
